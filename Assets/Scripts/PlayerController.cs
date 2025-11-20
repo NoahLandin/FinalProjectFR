@@ -7,8 +7,10 @@ public class PlayerController : MonoBehaviour
     public float yRange = 4.5f;  // adjust to your screen bounds
     public GameObject Puck1;
     public GameObject Blocky;
+    public GameObject scoreText;
+    public GameObject gameOverText;
 
-    private void Start()
+    void Start()
     {
         Instantiate(Blocky, new Vector2(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange)), Quaternion.identity);
     }
@@ -18,8 +20,8 @@ public class PlayerController : MonoBehaviour
         //
 
         // Get input
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        float moveHorizontal = Input.GetAxisRaw("Horizontal");
+        float moveVertical = Input.GetAxisRaw("Vertical");
 
         // Move the movement
         transform.Translate(new Vector2(moveHorizontal, moveVertical) * speed * Time.deltaTime);
@@ -31,12 +33,31 @@ public class PlayerController : MonoBehaviour
         transform.position = new Vector3(clampedX, clampedY, transform.position.z);
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Blocky"))
         {
             Destroy(other.gameObject);
             Debug.Log("Hit Blocky");
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Blocky"))
+        {
+            Debug.Log("You hit a blocky!");
+            Destroy(other.gameObject);
+            Instantiate(Blocky, new Vector2(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange)), Quaternion.identity);
+            Instantiate(Puck1, new Vector2(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange)), Quaternion.identity);
+
+            scoreText.GetComponent<ScoreKeeper>().UpdateScore();
+        }
+
+        if(other.gameObject.CompareTag("Puck"))
+        {
+            gameOverText.SetActive(true);
+            Time.timeScale = 0;
         }
     }
 }
