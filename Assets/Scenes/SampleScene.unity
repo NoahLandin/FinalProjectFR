@@ -1538,10 +1538,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Puck1
       objectReference: {fileID: 0}
-    - target: {fileID: 2243001064583001423, guid: 49668389f6acbab4cb1501062f038a50, type: 3}
-      propertyPath: m_TagString
-      value: Puck
-      objectReference: {fileID: 0}
     - target: {fileID: 6451587566433195576, guid: 49668389f6acbab4cb1501062f038a50, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.9601
