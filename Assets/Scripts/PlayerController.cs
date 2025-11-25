@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
         // Move the movement
         transform.Translate(new Vector2(moveHorizontal, moveVertical) * speed * Time.deltaTime);
 
-        // Keep inside bounds
+        // Keep everythinbg inside bounds
         float clampedX = Mathf.Clamp(transform.position.x, -xRange, xRange);
         float clampedY = Mathf.Clamp(transform.position.y, -yRange, yRange);
 
@@ -49,6 +49,8 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("You hit a blocky!");
             Destroy(other.gameObject);
+
+            //spawn new blocky and puck at random
             Instantiate(Blocky, new Vector2(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange)), Quaternion.identity);
             Instantiate(Puck1, new Vector2(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange)), Quaternion.identity);
 
@@ -76,7 +78,7 @@ public class PlayerController : MonoBehaviour
         foreach (GameObject dude in allBlockys)
             GameObject.Destroy(dude);
 
-
+        //reset player position and blocky and puck
         transform.position = new Vector2(0,0);
         Instantiate(Blocky, new Vector2(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange)), Quaternion.identity);
         Instantiate(Puck1, new Vector2(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange)), Quaternion.identity);
