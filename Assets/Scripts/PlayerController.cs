@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
         float clampedY = Mathf.Clamp(transform.position.y, -yRange, yRange);
 
         transform.position = new Vector3(clampedX, clampedY, transform.position.z);
+
     }
 
     void OnTriggerEnter(Collider other)
@@ -51,6 +52,7 @@ public class PlayerController : MonoBehaviour
             Instantiate(Blocky, new Vector2(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange)), Quaternion.identity);
             Instantiate(Puck1, new Vector2(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange)), Quaternion.identity);
 
+            scoreText.GetComponent<ScoreKeeper>().scoreValue += 5;
             scoreText.GetComponent<ScoreKeeper>().UpdateScore();
         }
 
@@ -59,5 +61,30 @@ public class PlayerController : MonoBehaviour
             gameOverText.SetActive(true);
             Time.timeScale = 0;
         }
+    }
+
+    public void NewGame()
+    {
+        Debug.Log("Its a new game!");
+        //destroy all pucks
+        GameObject[] allPucks = GameObject.FindGameObjectsWithTag("Puck");
+        foreach (GameObject dude in allPucks)
+            GameObject.Destroy(dude);
+
+        //destroy all blockys
+        GameObject[] allBlockys = GameObject.FindGameObjectsWithTag("Blocky");
+        foreach (GameObject dude in allBlockys)
+            GameObject.Destroy(dude);
+
+
+        transform.position = new Vector2(0,0);
+        Instantiate(Blocky, new Vector2(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange)), Quaternion.identity);
+        Instantiate(Puck1, new Vector2(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange)), Quaternion.identity);
+        gameOverText.SetActive(false);
+            Time.timeScale = 1;
+
+        //Set score to zero
+        scoreText.GetComponent<ScoreKeeper>().scoreValue = 0;
+        scoreText.GetComponent<ScoreKeeper>().UpdateScore();
     }
 }

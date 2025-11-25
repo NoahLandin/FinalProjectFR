@@ -20,7 +20,7 @@ public class ScoreKeeper : MonoBehaviour
 
     public void UpdateScore()
     {
-        scoreValue += 5;
+        //scoreValue += 5;
         scoreText.text = "Score:" +scoreValue.ToString();
     }
 }
